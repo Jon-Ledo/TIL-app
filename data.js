@@ -1,20 +1,20 @@
 const CATEGORIES = [
-  { name: "technology", color: "#3b82f6" },
-  { name: "science", color: "#16a34a" },
-  { name: "finance", color: "#ef4444" },
-  { name: "society", color: "#eab308" },
-  { name: "entertainment", color: "#db2777" },
-  { name: "health", color: "#14b8a6" },
-  { name: "history", color: "#f97316" },
-  { name: "news", color: "#8b5cf6" },
-];
+  { name: 'technology', color: '#3b82f6' },
+  { name: 'science', color: '#16a34a' },
+  { name: 'finance', color: '#ef4444' },
+  { name: 'society', color: '#eab308' },
+  { name: 'entertainment', color: '#db2777' },
+  { name: 'health', color: '#14b8a6' },
+  { name: 'history', color: '#f97316' },
+  { name: 'news', color: '#8b5cf6' },
+]
 
 const initialFacts = [
   {
     id: 1,
-    text: "React is being developed by Meta (formerly facebook)",
-    source: "https://opensource.fb.com/",
-    category: "technology",
+    text: 'React is being developed by Meta (formerly facebook)',
+    source: 'https://opensource.fb.com/',
+    category: 'technology',
     votesInteresting: 24,
     votesMindblowing: 9,
     votesFalse: 4,
@@ -22,10 +22,10 @@ const initialFacts = [
   },
   {
     id: 2,
-    text: "Millennial dads spend 3 times as much time with their kids than their fathers spent with them. In 1982, 43% of fathers had never changed a diaper. Today, that number is down to 3%",
+    text: 'Millennial dads spend 3 times as much time with their kids than their fathers spent with them. In 1982, 43% of fathers had never changed a diaper. Today, that number is down to 3%',
     source:
-      "https://www.mother.ly/parenting/millennial-dads-spend-more-time-with-their-kids",
-    category: "society",
+      'https://www.mother.ly/parenting/millennial-dads-spend-more-time-with-their-kids',
+    category: 'society',
     votesInteresting: 11,
     votesMindblowing: 2,
     votesFalse: 0,
@@ -33,16 +33,29 @@ const initialFacts = [
   },
   {
     id: 3,
-    text: "Lisbon is the capital of Portugal",
-    source: "https://en.wikipedia.org/wiki/Lisbon",
-    category: "society",
+    text: 'Lisbon is the capital of Portugal',
+    source: 'https://en.wikipedia.org/wiki/Lisbon',
+    category: 'society',
     votesInteresting: 8,
     votesMindblowing: 3,
     votesFalse: 1,
     createdIn: 2015,
   },
-];
+]
 
 // LINK TO APP SAMPLE DATA: https://docs.google.com/spreadsheets/d/1eeldcA_OwP4DHYEvjG0kDe0cRys-cDPhc_E9P9G1e3I/edit#gid=0
 
 // 👍 🤯 ⛔️
+
+// let url = 'https://ubhglnwmggcirwwbcwap.supabase.co/rest/v1/facts'
+
+// let key =
+//   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InViaGdsbndtZ2djaXJ3d2Jjd2FwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzE0ODE0OTksImV4cCI6MTk4NzA1NzQ5OX0.S1wCBnCFywT2J19Jp62dYpyLbc6YEU1G_4ioQlHnVeQ'
+
+// fetch(url, {
+//   headers: {
+//     apikey: key,
+//   },
+// })
+//   .then((response) => response.json())
+//   .then((data) => console.log(data))

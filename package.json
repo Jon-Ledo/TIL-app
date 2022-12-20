@@ -1,0 +1,23 @@
+{
+  "name": "til-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "data.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jon-Ledo/TIL-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jon-Ledo/TIL-app/issues"
+  },
+  "homepage": "https://github.com/Jon-Ledo/TIL-app#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3"
+  }
+}
