@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import './style.css'
 
 const initialFacts = [
@@ -46,78 +47,177 @@ const CATEGORIES = [
 ]
 
 function App() {
-  const appTitle = 'Today I Learned'
+  const [showForm, setShowForm] = useState(false)
+  const [facts, setFacts] = useState(initialFacts)
+
   return (
     <>
-      {/* HEADER */}
-      <header className='header'>
-        <div className='logo'>
-          <img
-            src='logo.png'
-            height='68'
-            width='68'
-            alt='Today I Learned Logo'
-          />
-          <h1>{appTitle}</h1>
-        </div>
+      <Header showForm={showForm} setShowForm={setShowForm} />
 
-        <button className='btn btn-large btn-open'>Share a fact</button>
-      </header>
-
-      <NewFactForm />
+      {showForm ? (
+        <NewFactForm setFacts={setFacts} setShowForm={setShowForm} />
+      ) : null}
 
       <main className='main'>
         <CategoryFilter />
-        <FactList />
+        <FactList facts={facts} />
       </main>
     </>
   )
 }
 
-function NewFactForm() {
-  return <form className='fact-form'>Fact Form</form>
+function Header({ showForm, setShowForm }) {
+  const appTitle = 'Today I Learned'
+
+  return (
+    <header className='header'>
+      <div className='logo'>
+        <img src='logo.png' height='68' width='68' alt='Today I Learned Logo' />
+        <h1>{appTitle}</h1>
+      </div>
+
+      <button
+        className='btn btn-large btn-open'
+        onClick={() => setShowForm((show) => !show)}
+      >
+        {showForm ? 'Close' : 'Share a fact'}
+      </button>
+    </header>
+  )
+}
+
+function isValidHttpUrl(string) {
+  let url
+  try {
+    url = new URL(string)
+  } catch (_) {
+    return false
+  }
+  return url.protocol === 'http:' || url.protocol === 'https:'
+}
+
+function NewFactForm({ setFacts, setShowForm }) {
+  const [text, setText] = useState('')
+  const [source, setsource] = useState('https://example.com')
+  const [category, setcategory] = useState('')
+  const textLength = text.length
+
+  function handleSubmit(e) {
+    e.preventDefault()
+
+    if (text && isValidHttpUrl(source) && category && textLength <= 200) {
+      const newFact = {
+        id: Math.round(Math.random() * 100000000),
+        text,
+        source,
+        category,
+        votesInteresting: 0,
+        votesMindblowing: 0,
+        votesFalse: 0,
+        createdIn: new Date().getFullYear(),
+      }
+      setFacts((facts) => [newFact, ...facts])
+
+      setText('')
+      setsource('')
+      setcategory('')
+
+      setShowForm((show) => !show)
+    }
+  }
+
+  return (
+    <form className='fact-form' onSubmit={handleSubmit}>
+      <input
+        type='text'
+        placeholder='Share a fact with the world...'
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
+      <span>{200 - textLength}</span>
+      <input
+        type='text'
+        placeholder='Trustworthy source...'
+        value={source}
+        onChange={(e) => setsource(e.target.value)}
+      />
+      <select value={category} onChange={(e) => setcategory(e.target.value)}>
+        <option value=''>Choose category:</option>
+        {CATEGORIES.map((category) => {
+          return (
+            <option key={category.name} value={category.name}>
+              {category.name.toUpperCase()}
+            </option>
+          )
+        })}
+      </select>
+      <button className='btn btn-large'>Post</button>
+    </form>
+  )
 }
 
 function CategoryFilter() {
-  return <aside>Category Filter</aside>
-}
-
-function FactList() {
-  // TEMP variables
-  const facts = initialFacts
-
   return (
-    <section>
-      <ul className='facts-list'>
-        {facts.map((fact) => {
+    <aside>
+      <ul>
+        <li className='category'>
+          <button className='btn btn-all-categories'>All</button>
+        </li>
+        {CATEGORIES.map((category) => {
           return (
-            <li className='fact' key={fact.id}>
-              <p>
-                {fact.text}
-                <a className='source' href={fact.source} target='_blank'>
-                  (Source)
-                </a>
-              </p>
-              <span
-                className='tag'
-                style={{
-                  backgroundColor: CATEGORIES.find(
-                    (cat) => cat.name === fact.category
-                  ).color,
-                }}
+            <li key={category.name} className='category'>
+              <button
+                className='btn btn-category'
+                style={{ backgroundColor: category.color }}
               >
-                {fact.category}
-              </span>
-              <div className='vote-buttons'>
-                <button>👍 {fact.votesInteresting}</button>
-                <button>🤯 {fact.votesMindblowing}</button>
-                <button>⛔️ {fact.votesFalse}</button>
-              </div>
+                {category.name}
+              </button>
             </li>
           )
         })}
       </ul>
+    </aside>
+  )
+}
+
+function FactList({ facts }) {
+  return (
+    <section>
+      <ul className='facts-list'>
+        {facts.map((fact) => {
+          return <Fact key={fact.id} fact={fact} />
+        })}
+      </ul>
     </section>
+  )
+}
+
+function Fact({ fact }) {
+  // const {fact} = props
+
+  return (
+    <li className='fact'>
+      <p>
+        {fact.text}
+        <a className='source' href={fact.source} target='_blank'>
+          (Source)
+        </a>
+      </p>
+      <span
+        className='tag'
+        style={{
+          backgroundColor: CATEGORIES.find((cat) => cat.name === fact.category)
+            .color,
+        }}
+      >
+        {fact.category}
+      </span>
+      <div className='vote-buttons'>
+        <button>👍 {fact.votesInteresting}</button>
+        <button>🤯 {fact.votesMindblowing}</button>
+        <button>⛔️ {fact.votesFalse}</button>
+      </div>
+    </li>
   )
 }
 
